@@ -1745,7 +1745,7 @@ class Gitlab(object):
         else:
             return False
 
-    def createfile(self, project_id, file_path, branch_name, content, commit_message):
+    def createfile(self, project_id, file_path, branch_name, content, commit_message, encoding):
         """Creates a new file in the repository
 
         :param project_id: project id
@@ -1756,12 +1756,12 @@ class Gitlab(object):
         :return: true if success, false if not
         """
         data = {"file_path": file_path, "branch_name": branch_name,
-                "content": content, "commit_message": commit_message}
+                "content": content, "commit_message": commit_message, "encoding":encoding}
         request = requests.post("{0}/{1}/repository/files".format(self.projects_url, project_id),
                                 verify=self.verify_ssl, headers=self.headers, data=data)
         return request.status_code == 201
 
-    def updatefile(self, project_id, file_path, branch_name, content, commit_message):
+    def updatefile(self, project_id, file_path, branch_name, content, commit_message, encoding):
         """Updates an existing file in the repository
 
         :param project_id: project id
@@ -1772,7 +1772,7 @@ class Gitlab(object):
         :return: true if success, false if not
         """
         data = {"file_path": file_path, "branch_name": branch_name,
-                "content": content, "commit_message": commit_message}
+                "content": content, "commit_message": commit_message, "encoding":encoding}
         request = requests.put("{0}/{1}/repository/files".format(self.projects_url, project_id),
                                headers=self.headers, data=data, verify=self.verify_ssl)
 
